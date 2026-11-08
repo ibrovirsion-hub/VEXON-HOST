@@ -1,0 +1,364 @@
+
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>VEXON HOST</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+:root{--green:#39f59a;--bg:#080c0a;--panel:#111914;--line:#26362c;--muted:#89968e}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:#f2fff7;font-family:Inter,Arial,sans-serif}
+button,input,select{font:inherit}
+button{cursor:pointer}
+.hidden{display:none!important}
+#auth{min-height:100vh;display:grid;place-items:center;padding:20px;background:radial-gradient(ellipse at 50% 0,#17482c55,transparent 55%)}
+.auth-card{width:100%;max-width:410px;background:#101712;border:1px solid var(--line);border-radius:19px;padding:30px;box-shadow:0 25px 90px #0008}
+.logo{font-size:24px;font-weight:900;letter-spacing:1px;text-align:center;margin-bottom:8px}
+.logo span{color:var(--green)}
+.subtitle{text-align:center;color:var(--muted);font-size:12px;margin-bottom:27px}
+.field{margin:15px 0}
+label{display:block;font-size:11px;color:#b5c2b9;margin-bottom:8px}
+input,select{width:100%;background:#090e0b;border:1px solid var(--line);border-radius:9px;padding:13px;color:white;outline:none}
+input:focus,select:focus{border-color:var(--green)}
+.btn{border:0;border-radius:9px;padding:12px 16px;font-size:12px;font-weight:800;transition:.2s}
+.primary{background:var(--green);color:#06130b}
+.primary:hover{background:#75ffb8;transform:translateY(-1px)}
+.secondary{background:#1b2920;color:#e6f4eb;border:1px solid #304438}
+.danger{background:#49201f;color:#ffb7b1}
+.full{width:100%}
+.switch{text-align:center;color:var(--muted);font-size:12px;margin-top:20px}
+.switch a{color:var(--green);cursor:pointer}
+.error{color:#ff8f85;font-size:12px;margin:10px 0;min-height:16px}
+#app{min-height:100vh}
+.sidebar{width:235px;position:fixed;inset:0 auto 0 0;background:#0c120e;border-right:1px solid var(--line);padding:24px 16px;display:flex;flex-direction:column}
+.brand{font-size:21px;font-weight:900;padding:8px 10px 35px}
+.brand span{color:var(--green)}
+.menu-title{font-size:10px;color:#6f7c73;letter-spacing:2px;font-weight:800;padding:12px}
+.nav{display:grid;gap:6px}
+.nav button{border:0;background:transparent;color:#a7b2aa;text-align:left;padding:13px;border-radius:9px;font-size:12px;font-weight:600}
+.nav button:hover,.nav button.active{background:#183023;color:var(--green)}
+.sidebar-bottom{margin-top:auto}
+.system{border:1px solid #28523a;background:#122319;border-radius:12px;padding:14px;font-size:11px;line-height:1.8;color:#b7c9bd}
+.system b{color:var(--green)}
+.main{margin-left:235px;padding:0 32px 35px}
+.top{height:76px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center}
+.crumb{font-size:12px;color:var(--muted)}
+.user{font-size:12px;color:var(--green);background:#173020;padding:9px 13px;border-radius:20px}
+.content{max-width:1200px;margin:auto}
+.hero{margin-top:27px;padding:35px;border-radius:17px;border:1px solid #28513a;background:radial-gradient(ellipse at 85% 10%,#237a4544,transparent 50%),linear-gradient(120deg,#14251a,#0e1511);position:relative;overflow:hidden}
+.eyebrow{color:var(--green);font-size:10px;font-weight:800;letter-spacing:2px}
+.hero h1{font-size:clamp(27px,4vw,42px);line-height:1.13;letter-spacing:-1.5px;margin:15px 0}
+.hero h1 span{color:var(--green)}
+.hero p{color:#a9b8ae;font-size:13px;line-height:1.8;max-width:520px}
+.hero .btn{margin:12px 7px 0 0}
+.section{margin-top:28px}
+.section-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
+.section-head h2{font-size:16px;margin:0}
+.section-head p{font-size:11px;color:var(--muted);margin:6px 0 0}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:13px}
+.stat,.card,.panel{background:var(--panel);border:1px solid var(--line);border-radius:13px;padding:18px}
+.stat small{color:var(--muted);font-size:11px}
+.stat strong{display:block;font-size:27px;margin-top:12px}
+.green{color:var(--green)}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:13px}
+.card-top{display:flex;justify-content:space-between;align-items:center}
+.card h3{font-size:14px;margin:0}
+.meta{font-size:10px;color:var(--muted);margin-top:6px}
+.status{font-size:9px;padding:6px 9px;border-radius:20px;background:#203a29;color:var(--green)}
+.status.off{background:#292f2b;color:#a9b3ac}
+.details{display:flex;gap:22px;margin:19px 0;color:var(--muted);font-size:10px}
+.details b{display:block;color:white;margin-top:5px;font-size:12px}
+.actions{display:flex;gap:7px;flex-wrap:wrap}
+.actions button{flex:1}
+.page{display:none}.page.active{display:block}
+.panel{margin-top:25px;padding:24px}
+.panel h2{font-size:18px;margin:0 0 8px}
+.panel>p{color:var(--muted);font-size:12px;margin-bottom:23px}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:15px}
+.check{display:flex;gap:10px;align-items:flex-start;color:#aebbb2;font-size:11px;line-height:1.6;margin-top:18px}
+.check input{width:auto;margin-top:2px;accent-color:var(--green)}
+.console{background:#050806;border:1px solid var(--line);padding:16px;border-radius:10px;height:300px;overflow:auto;color:#9af5b4;font:11px/1.8 Consolas,monospace;white-space:pre-wrap}
+.console-row{display:flex;gap:8px;margin-top:12px}
+.console-row input{flex:1;min-width:0}
+.empty{grid-column:1/-1;text-align:center;padding:35px;border:1px dashed #35483b;border-radius:12px;color:var(--muted);font-size:12px;line-height:2}
+.note{font-size:11px;color:var(--muted);line-height:1.7;margin-top:15px}
+footer{border-top:1px solid var(--line);margin-top:40px;padding-top:18px;color:#647168;font-size:10px;display:flex;justify-content:space-between}
+@media(max-width:760px){.sidebar{width:190px}.main{margin-left:190px;padding:0 17px}}
+@media(max-width:590px){.sidebar{position:static;width:auto;height:auto;padding:12px;display:block;border-right:0;border-bottom:1px solid var(--line)}.brand{padding:5px 8px 12px}.menu-title,.sidebar-bottom{display:none}.nav{display:flex;overflow:auto}.nav button{white-space:nowrap;padding:10px}.main{margin:0;padding:0 13px 25px}.top{height:55px}.hero{padding:24px 18px}.stats{grid-template-columns:1fr 1fr}.grid,.form-grid{grid-template-columns:1fr}footer{gap:8px;flex-direction:column}}
+</style>
+</head>
+<body>
+
+<section id="auth">
+  <div class="auth-card">
+    <div class="logo">VEXON<span>HOST</span></div>
+    <div class="subtitle">NEXT GENERATION MINECRAFT HOSTING</div>
+    <div id="loginForm">
+      <div class="field"><label>LOGIN</label><input id="loginUser" autocomplete="username" placeholder="Login"></div>
+      <div class="field"><label>PAROL</label><input id="loginPass" type="password" autocomplete="current-password" placeholder="Parol"></div>
+      <div class="error" id="loginError"></div>
+      <button class="btn primary full" onclick="login()">TIZIMGA KIRISH →</button>
+      <div class="switch">Hisobingiz yo‘qmi? <a onclick="toggleAuth()">Ro‘yxatdan o‘tish</a></div>
+    </div>
+    <div id="registerForm" class="hidden">
+      <div class="field"><label>LOGIN</label><input id="regUser" autocomplete="username" placeholder="Yangi login"></div>
+      <div class="field"><label>PAROL</label><input id="regPass" type="password" autocomplete="new-password" placeholder="Kamida 8 belgi"></div>
+      <div class="error" id="regError"></div>
+      <button class="btn primary full" onclick="register()">HISOB YARATISH →</button>
+      <div class="switch">Hisobingiz bormi? <a onclick="toggleAuth()">Kirish</a></div>
+    </div>
+  </div>
+</section>
+
+<div id="app" class="hidden">
+  <aside class="sidebar">
+    <div class="brand">VEXON<span>HOST</span></div>
+    <div class="menu-title">ASOSIY MENU</div>
+    <nav class="nav">
+      <button class="active" onclick="page('home',this)">▦ &nbsp; Bosh sahifa</button>
+      <button onclick="page('servers',this)">▣ &nbsp; Serverlarim</button>
+      <button onclick="page('create',this)">＋ &nbsp; Server yaratish</button>
+      <button onclick="page('console',this)">⌘ &nbsp; Konsol</button>
+    </nav>
+    <div class="sidebar-bottom">
+      <div class="menu-title">TIZIM HOLATI</div>
+      <div class="system"><b>● LOCAL HOST ONLINE</b><br>VEXON HOST boshqaruv paneli ishlamoqda.</div>
+      <nav class="nav" style="margin-top:10px"><button onclick="logout()">↪ &nbsp; Chiqish</button></nav>
+    </div>
+  </aside>
+
+  <main class="main">
+    <header class="top"><div class="crumb">VEXON HOST / <b id="crumb">Bosh sahifa</b></div><div class="user" id="username"></div></header>
+    <div class="content">
+      <section class="page active" id="home">
+        <div class="hero">
+          <div class="eyebrow">YOUR SERVER. YOUR WORLD.</div>
+          <h1>MINECRAFT SERVERINGIZNI<br><span>BOSHQARING.</span></h1>
+          <p>Serveringizni yarating, ishga tushiring va boshqaring. Barcha sozlamalar bitta qulay panelda.</p>
+          <button class="btn primary" onclick="page('create')">＋ SERVER YARATISH</button>
+          <button class="btn secondary" onclick="page('servers')">SERVERLARIM →</button>
+        </div>
+        <div class="section">
+          <div class="section-head"><h2>Statistika</h2></div>
+          <div class="stats">
+            <div class="stat"><small>Jami serverlar</small><strong id="total">0</strong></div>
+            <div class="stat"><small>Ishlayotgan serverlar</small><strong class="green" id="running">0</strong></div>
+            <div class="stat"><small>Server RAM limiti</small><strong>2 GB</strong></div>
+          </div>
+        </div>
+        <div class="section">
+          <div class="section-head"><h2>Serverlaringiz</h2><button class="btn secondary" onclick="page('servers')">BARCHASI →</button></div>
+          <div class="grid" id="homeServers"></div>
+        </div>
+      </section>
+
+      <section class="page" id="servers">
+        <div class="section section-head"><h2>Serverlarim</h2><button class="btn primary" onclick="page('create')">＋ YANGI SERVER</button></div>
+        <div class="grid" id="allServers"></div>
+      </section>
+
+      <section class="page" id="create">
+        <div class="panel">
+          <h2>Yangi Minecraft server</h2>
+          <p>Server ma’lumotlarini kiriting va server JAR faylini yuklang.</p>
+          <form id="createForm">
+            <div class="form-grid">
+              <div class="field"><label>SERVER NOMI</label><input name="name" required minlength="3" maxlength="30" placeholder="Masalan: VEXON SMP"></div>
+              <div class="field"><label>MINECRAFT VERSIYASI</label><select name="version"><option>1.20.1</option><option>1.21.1</option><option>1.19.4</option><option>1.16.5</option><option>Boshqa</option></select></div>
+              <div class="field"><label>SERVER YADROSI</label><select name="software"><option>Paper</option><option>Purpur</option><option>Vanilla</option><option>Fabric</option><option>Forge</option></select></div>
+              <div class="field"><label>RAM</label><select name="ram"><option value="512">512 MB</option><option value="1024" selected>1 GB</option><option value="1536">1.5 GB</option><option value="2048">2 GB</option></select></div>
+              <div class="field" style="grid-column:1/-1"><label>MINECRAFT SERVER JAR</label><input name="jar" type="file" accept=".jar" required></div>
+            </div>
+            <label class="check"><input type="checkbox" name="eula" value="yes" required><span>Minecraft EULA shartlarini o‘qidim va qabul qilaman.</span></label>
+            <div class="note">Faqat ishonchli manbadan olingan server JAR faylini yuklang. EULA: https://aka.ms/MinecraftEULA</div>
+            <div class="error" id="createError"></div>
+            <button class="btn primary" type="submit">SERVER YARATISH →</button>
+          </form>
+        </div>
+      </section>
+
+      <section class="page" id="console">
+        <div class="panel">
+          <h2>Minecraft konsoli</h2>
+          <p>Buyruq yuborish uchun avval serverni tanlang.</p>
+          <div class="field"><label>SERVER</label><select id="consoleServer" onchange="loadLogs()"></select></div>
+          <div class="console" id="consoleLog">VEXON HOST konsoliga xush kelibsiz.</div>
+          <div class="console-row">
+            <input id="command" placeholder="Masalan: list" onkeydown="if(event.key==='Enter')sendCommand()">
+            <button class="btn primary" onclick="sendCommand()">YUBORISH</button>
+          </div>
+          <div class="note">Bu yerga faqat Minecraft server buyruqlari yuboriladi.</div>
+        </div>
+      </section>
+      <footer><span>© 2026 VEXON HOST</span><span>POWERED BY VEXON</span></footer>
+    </div>
+  </main>
+</div>
+
+<script>
+let me=null;
+let refreshTimer=null;
+
+async function api(url,options={}){
+  const response=await fetch(url,{...options,headers:{
+    ...(options.body instanceof FormData?{}:{"Content-Type":"application/json"}),
+    ...(options.headers||{})
+  }});
+  const data=await response.json().catch(()=>({error:"Server javobi noto‘g‘ri."}));
+  if(!response.ok)throw new Error(data.error||"Xatolik yuz berdi.");
+  return data;
+}
+function toggleAuth(){
+  document.getElementById("loginForm").classList.toggle("hidden");
+  document.getElementById("registerForm").classList.toggle("hidden");
+}
+function showAuth(){
+  document.getElementById("auth").classList.remove("hidden");
+  document.getElementById("app").classList.add("hidden");
+}
+function showApp(user){
+  me=user;
+  document.getElementById("auth").classList.add("hidden");
+  document.getElementById("app").classList.remove("hidden");
+  document.getElementById("username").textContent=user.username;
+  refresh();
+  clearInterval(refreshTimer);
+  refreshTimer=setInterval(refresh,3000);
+}
+async function login(){
+  const error=document.getElementById("loginError");
+  error.textContent="";
+  try{
+    const result=await api("/api/login",{method:"POST",body:JSON.stringify({
+      username:document.getElementById("loginUser").value,
+      password:document.getElementById("loginPass").value
+    })});
+    showApp({username:result.username});
+  }catch(e){error.textContent=e.message}
+}
+async function register(){
+  const error=document.getElementById("regError");
+  error.textContent="";
+  try{
+    const result=await api("/api/register",{method:"POST",body:JSON.stringify({
+      username:document.getElementById("regUser").value,
+      password:document.getElementById("regPass").value
+    })});
+    showApp({username:result.username});
+  }catch(e){error.textContent=e.message}
+}
+async function logout(){
+  await api("/api/logout",{method:"POST"}).catch(()=>{});
+  clearInterval(refreshTimer);
+  showAuth();
+}
+function page(id,button){
+  document.querySelectorAll(".page").forEach(x=>x.classList.remove("active"));
+  document.getElementById(id).classList.add("active");
+  document.querySelectorAll(".nav button").forEach(x=>x.classList.remove("active"));
+  if(button)button.classList.add("active");
+  const names={home:"Bosh sahifa",servers:"Serverlarim",create:"Server yaratish",console:"Konsol"};
+  document.getElementById("crumb").textContent=names[id];
+  if(id==="console")loadLogs();
+}
+function esc(value){
+  return String(value).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+}
+let serverCache=[];
+async function refresh(){
+  try{
+    serverCache=await api("/api/servers");
+    render();
+  }catch(e){}
+}
+function card(s){
+  const online=s.status==="online";
+  return `<div class="card">
+    <div class="card-top">
+      <div><h3>⛏ ${esc(s.name)}</h3><div class="meta">${esc(s.software)} · ${esc(s.version)}</div></div>
+      <span class="status ${online?"":"off"}">${online?"ONLINE":"OFFLINE"}</span>
+    </div>
+    <div class="details">
+      <div>RAM<b>${s.ram} MB</b></div>
+      <div>VERSIYA<b>${esc(s.version)}</b></div>
+      <div>YADRO<b>${esc(s.software)}</b></div>
+    </div>
+    <div class="actions">
+      ${online
+        ? `<button class="btn secondary" onclick="action('${s.id}','stop')">STOP</button><button class="btn secondary" onclick="action('${s.id}','restart')">RESTART</button>`
+        : `<button class="btn primary" onclick="action('${s.id}','start')">START</button>`}
+      <button class="btn danger" onclick="removeServer('${s.id}')">O‘CHIRISH</button>
+    </div>
+  </div>`;
+}
+function render(){
+  const online=serverCache.filter(s=>s.status==="online").length;
+  document.getElementById("total").textContent=serverCache.length;
+  document.getElementById("running").textContent=online;
+  const empty='<div class="empty">⛏<br>Hozircha server yo‘q.<br>Yangi server yaratish uchun tugmani bosing.</div>';
+  document.getElementById("homeServers").innerHTML=serverCache.length?serverCache.slice(0,2).map(card).join(""):empty;
+  document.getElementById("allServers").innerHTML=serverCache.length?serverCache.map(card).join(""):empty;
+  const select=document.getElementById("consoleServer");
+  const old=select.value;
+  select.innerHTML=serverCache.map(s=>`<option value="${s.id}">${esc(s.name)}</option>`).join("");
+  if(serverCache.some(s=>s.id===old))select.value=old;
+}
+async function action(id,type){
+  try{
+    await api(`/api/servers/${id}/${type}`,{method:"POST"});
+    await refresh();
+  }catch(e){alert(e.message)}
+}
+async function removeServer(id){
+  if(!confirm("Server va uning fayllarini o‘chirishni xohlaysizmi?"))return;
+  try{await api(`/api/servers/${id}`,{method:"DELETE"});await refresh()}
+  catch(e){alert(e.message)}
+}
+document.getElementById("createForm").addEventListener("submit",async e=>{
+  e.preventDefault();
+  const error=document.getElementById("createError");
+  error.textContent="";
+  const form=new FormData(e.target);
+  try{
+    await api("/api/servers",{method:"POST",body:form});
+    e.target.reset();
+    await refresh();
+    page("servers");
+  }catch(err){error.textContent=err.message}
+});
+async function loadLogs(){
+  const id=document.getElementById("consoleServer").value;
+  const box=document.getElementById("consoleLog");
+  if(!id){box.textContent="Avval server yarating.";return}
+  try{
+    const data=await api(`/api/servers/${id}/logs`);
+    box.textContent=data.logs.join("\n")||"Hozircha log yo‘q.";
+    box.scrollTop=box.scrollHeight;
+  }catch(e){box.textContent=e.message}
+}
+async function sendCommand(){
+  const id=document.getElementById("consoleServer").value;
+  const input=document.getElementById("command");
+  const command=input.value.trim();
+  if(!id||!command)return;
+  try{
+    await api(`/api/servers/${id}/command`,{
+      method:"POST",body:JSON.stringify({command})
+    });
+    input.value="";
+    await loadLogs();
+  }catch(e){alert(e.message)}
+}
+async function init(){
+  try{
+    const data=await api("/api/me");
+    if(data.user)showApp(data.user);
+    else showAuth();
+  }catch(e){showAuth()}
+}
+init();
+</script>
+</body>
+</html>
